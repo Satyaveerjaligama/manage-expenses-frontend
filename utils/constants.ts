@@ -1,1 +1,1 @@
-export const PRODUCT_NAME="Expenses manager"
+export const PRODUCT_NAME = "Expenses manager";

@@ -1,6 +1,6 @@
-import * as React from 'react';
-import MuiAvatar from '@mui/material/Avatar';
-import Stack from '@mui/material/Stack';
+import * as React from "react";
+import MuiAvatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -11,7 +11,7 @@ function stringToColor(string: string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -27,15 +27,15 @@ function stringAvatar(name: string) {
     sx: {
       bgcolor: stringToColor(name),
     },
-    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
   };
 }
 
 interface AvatarProps {
-    name: string;
+  name: string;
 }
 export default function Avatar(props: AvatarProps) {
-    const {name} = props;
+  const { name } = props;
   return (
     <Stack direction="row" spacing={2}>
       <MuiAvatar {...stringAvatar(name)} />
