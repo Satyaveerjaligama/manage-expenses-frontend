@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, TextField } from "@mui/material";
-import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
+import { GROUP_MODAL_TYPES } from "@/utils/constants";
 
 const style = {
   position: "absolute",
@@ -17,14 +17,14 @@ const style = {
   borderRadius: "25px",
 };
 
-interface ExpenseModalProps {
+interface GroupModalProps {
   open: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleClose: any;
   modalType: string;
 }
 
-const ExpenseModal = (props: ExpenseModalProps) => {
+const GroupModal = (props: GroupModalProps) => {
   const { open, handleClose, modalType } = props;
 
   return (
@@ -37,18 +37,26 @@ const ExpenseModal = (props: ExpenseModalProps) => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {modalType === EXPENSE_MODAL_TYPES.add
-              ? "Add Expense"
-              : "Edit Expense"}
+            {modalType === GROUP_MODAL_TYPES.create
+              ? "Create Group"
+              : modalType === GROUP_MODAL_TYPES.join
+              ? "Join Group"
+              : "Edit Group"}
           </Typography>
-          <TextField label="Label" fullWidth className="!mt-3" />
-          <TextField label="Amount" fullWidth className="!mt-3" />
-          <TextField label="Category" fullWidth className="!mt-3" />
-          <TextField label="Payment Method" fullWidth className="!mt-3" />
-          <TextField label="Date" fullWidth className="!mt-3" />
-          {modalType === EXPENSE_MODAL_TYPES.add ? (
+          <TextField
+            label={
+              modalType === GROUP_MODAL_TYPES.join ? "Group code" : "Group name"
+            }
+            fullWidth
+            className="!mt-3"
+          />
+          {modalType === GROUP_MODAL_TYPES.create ? (
             <Button variant="contained" className="!mt-7" fullWidth>
-              Add
+              Create
+            </Button>
+          ) : modalType === GROUP_MODAL_TYPES.join ? (
+            <Button variant="contained" className="!mt-7" fullWidth>
+              Join
             </Button>
           ) : (
             <div className="!mt-7">
@@ -66,4 +74,4 @@ const ExpenseModal = (props: ExpenseModalProps) => {
   );
 };
 
-export default ExpenseModal;
+export default GroupModal;
