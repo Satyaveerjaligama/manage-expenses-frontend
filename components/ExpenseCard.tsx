@@ -2,7 +2,7 @@ import { Card, CardContent, IconButton, Typography } from "@mui/material";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
 
-interface PersonalExpenseCardProps {
+interface ExpenseCardProps {
   label: string;
   amount: number | string;
   date: string;
@@ -10,7 +10,7 @@ interface PersonalExpenseCardProps {
   handleOpen: any;
 }
 
-const PersonalExpenseCard = (props: PersonalExpenseCardProps) => {
+const ExpenseCard = (props: ExpenseCardProps) => {
   const { label, amount, date, handleOpen } = props;
   return (
     <Card>
@@ -28,4 +28,4 @@ const PersonalExpenseCard = (props: PersonalExpenseCardProps) => {
   );
 };
 
-export default PersonalExpenseCard;
+export default ExpenseCard;
