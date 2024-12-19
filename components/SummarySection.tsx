@@ -1,30 +1,30 @@
-import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { crimsonPro } from "@/utils/fonts";
+import { Box, Grid } from "@mui/material";
 
 const SummarySection = () => {
   return (
-    <Card className="mt-5">
-      <CardContent>
-        <Grid
-          container
-          rowSpacing={2}
-          columnSpacing={2}
-          className="items-center text-center"
-        >
-          <Grid item xs={12} md={4}>
-            <Typography>Today</Typography>
-            <Typography>amount</Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography>This Week</Typography>
-            <Typography>amount</Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography>This Month</Typography>
-            <Typography>amount</Typography>
-          </Grid>
+    <Box className="mt-3">
+      <Grid
+        container
+        rowSpacing={2}
+        columnSpacing={2}
+        className="items-center text-center text-white"
+        style={crimsonPro.style}
+      >
+        <Grid item xs={12} md={4}>
+          <p className="text-lg font-bold">Today</p>
+          <p>&#8377; 1000</p>
         </Grid>
-      </CardContent>
-    </Card>
+        <Grid item xs={12} md={4}>
+          <p className="text-lg font-bold">This Week</p>
+          <p>&#8377; 1000</p>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <p className="text-lg font-bold">This Month</p>
+          <p>&#8377; 1000</p>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };
 

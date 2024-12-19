@@ -1,7 +1,7 @@
 "use client";
 import Header from "@/components/Header";
 import SummarySection from "../../components/SummarySection";
-import { Grid, IconButton } from "@mui/material";
+import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import ExpenseModal from "../../components/ExpenseModal";
 import { useState } from "react";
@@ -21,7 +21,8 @@ const PersonalExpensesPage = () => {
     <>
       <Header />
       <SummarySection />
-      <Grid container rowSpacing={2} columnSpacing={2} className="!mt-5">
+      <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
+      <Grid container rowSpacing={2} columnSpacing={2} className="!mt-5 px-5">
         <Grid item xs={12} sm={6} md={4}>
           <ExpenseCard
             label="Sample"
@@ -40,7 +41,7 @@ const PersonalExpensesPage = () => {
         className="!absolute bottom-4 right-4"
         onClick={() => handleOpen(EXPENSE_MODAL_TYPES.add)}
       >
-        <AddCircleRoundedIcon className="!text-6xl" />
+        <AddCircleRoundedIcon className="!text-6xl text-white" />
       </IconButton>
     </>
   );

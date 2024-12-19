@@ -27,7 +27,7 @@ const GroupExpensesPage = () => {
           Join Group
         </Button>
       </div>
-      <Grid container rowSpacing={2} columnSpacing={2} className="!mt-3">
+      <Grid container rowSpacing={2} columnSpacing={2} className="!mt-3 px-5">
         <Grid item xs={12} sm={6} md={4}>
           <GroupCard
             groupLabel="Sample Group label"
@@ -41,7 +41,7 @@ const GroupExpensesPage = () => {
         className="!absolute bottom-4 right-4"
         onClick={() => handleOpen(GROUP_MODAL_TYPES.create)}
       >
-        <AddCircleRoundedIcon className="!text-6xl" />
+        <AddCircleRoundedIcon className="!text-6xl text-white" />
       </IconButton>
     </>
   );

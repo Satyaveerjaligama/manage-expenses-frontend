@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, TextField } from "@mui/material";
 import { GROUP_MODAL_TYPES } from "@/utils/constants";
+import { crimsonPro } from "@/utils/fonts";
 
 const style = {
   position: "absolute",
@@ -36,7 +37,13 @@ const GroupModal = (props: GroupModalProps) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            style={crimsonPro.style}
+            className="!font-bold !text-2xl"
+          >
             {modalType === GROUP_MODAL_TYPES.create
               ? "Create Group"
               : modalType === GROUP_MODAL_TYPES.join
@@ -51,19 +58,39 @@ const GroupModal = (props: GroupModalProps) => {
             className="!mt-3"
           />
           {modalType === GROUP_MODAL_TYPES.create ? (
-            <Button variant="contained" className="!mt-7" fullWidth>
+            <Button
+              variant="contained"
+              className="!mt-7 !text-base"
+              fullWidth
+              style={crimsonPro.style}
+            >
               Create
             </Button>
           ) : modalType === GROUP_MODAL_TYPES.join ? (
-            <Button variant="contained" className="!mt-7" fullWidth>
+            <Button
+              variant="contained"
+              className="!mt-7 !text-base"
+              fullWidth
+              style={crimsonPro.style}
+            >
               Join
             </Button>
           ) : (
             <div className="!mt-7">
-              <Button variant="outlined" fullWidth>
+              <Button
+                variant="outlined"
+                fullWidth
+                style={crimsonPro.style}
+                className="!text-base"
+              >
                 Delete
               </Button>
-              <Button variant="contained" className="!mt-3" fullWidth>
+              <Button
+                variant="contained"
+                className="!mt-3 !text-base"
+                fullWidth
+                style={crimsonPro.style}
+              >
                 Update
               </Button>
             </div>

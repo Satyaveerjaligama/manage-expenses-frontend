@@ -1,4 +1,4 @@
-export const PRODUCT_NAME = "Expenses manager";
+export const PRODUCT_NAME = "Manage Expenses";
 
 export const EXPENSE_MODAL_TYPES = {
   edit: "edit",
@@ -31,6 +31,17 @@ export const PAYMENT_METHODS_MENU_ITEMS = [
   {
     label: "Others",
     value: "others",
+  },
+];
+
+export const PAYMENT_TYPE_MENU_ITEMS = [
+  {
+    label: "Advance",
+    value: "Advance",
+  },
+  {
+    label: "Full",
+    value: "Full",
   },
 ];
 

@@ -15,7 +15,7 @@
 }
 
 body {
-  /* color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif; */
+  background-image: linear-gradient(to bottom right, #483036, #1e1218);
+  width: 100vw;
+  height: 100vh;
 }
