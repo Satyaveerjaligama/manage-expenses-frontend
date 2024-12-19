@@ -7,12 +7,14 @@ import {
   EXPENSE_MODAL_TYPES,
   EXPENSES_CATEGORY_MENU_ITEMS,
   PAYMENT_METHODS_MENU_ITEMS,
+  PAYMENT_TYPE_MENU_ITEMS,
 } from "@/utils/constants";
 import DropDown from "./DropDown";
 import DatePicker from "./DatePicker";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import EastRoundedIcon from "@mui/icons-material/EastRounded";
+import { crimsonPro } from "@/utils/fonts";
 
 const style = {
   position: "absolute",
@@ -45,7 +47,13 @@ const ExpenseModal = (props: ExpenseModalProps) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h2"
+            className="!font-bold !text-2xl"
+            style={crimsonPro.style}
+          >
             {modalType === EXPENSE_MODAL_TYPES.add
               ? "Add Expense"
               : "Edit Expense"}
@@ -77,13 +85,22 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             className="!mt-3"
             menuItems={PAYMENT_METHODS_MENU_ITEMS}
           />
+          {/* Payment types should be displayed only in group expense case */}
+          <DropDown
+            label="Payment Type"
+            value=""
+            fullWidth
+            className="!mt-3"
+            menuItems={PAYMENT_TYPE_MENU_ITEMS}
+          />
           <DatePicker label="Date" className="!mt-1" fullWidth />
           {modalType === EXPENSE_MODAL_TYPES.add ? (
             <Button
               startIcon={<AddRoundedIcon />}
               variant="contained"
-              className="!mt-7"
+              className="!mt-7 !text-base"
               fullWidth
+              style={crimsonPro.style}
             >
               Add
             </Button>
@@ -93,14 +110,17 @@ const ExpenseModal = (props: ExpenseModalProps) => {
                 variant="outlined"
                 fullWidth
                 endIcon={<DeleteRoundedIcon />}
+                style={crimsonPro.style}
+                className="!text-base"
               >
                 Delete
               </Button>
               <Button
                 variant="contained"
-                className="!mt-3"
+                className="!mt-3 !text-base"
                 fullWidth
                 endIcon={<EastRoundedIcon />}
+                style={crimsonPro.style}
               >
                 Update
               </Button>

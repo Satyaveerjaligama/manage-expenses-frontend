@@ -1,13 +1,7 @@
 "use client";
 import { PRODUCT_NAME } from "@/utils/constants";
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { crimsonPro, lexend } from "@/utils/fonts";
+import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 
 const LoginPage = () => {
   return (
@@ -16,9 +10,11 @@ const LoginPage = () => {
       sx={{ transform: "translate(-50%, -50%)" }}
     >
       <CardContent>
-        <Typography className="text-center !mb-2 !text-lg !font-semibold">
+        <p
+          className={`text-center !mb-6 !text-xl !font-semibold ${lexend.className}`}
+        >
           {PRODUCT_NAME}
-        </Typography>
+        </p>
         <Grid container rowSpacing={2} columnSpacing={2}>
           <Grid item xs={12}>
             <TextField label="Email/Phone number" fullWidth />
@@ -27,7 +23,12 @@ const LoginPage = () => {
             <TextField label="Password" fullWidth />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" className="!mt-7" fullWidth>
+            <Button
+              variant="contained"
+              className="!mt-7 !text-base"
+              fullWidth
+              style={crimsonPro.style}
+            >
               Login
             </Button>
           </Grid>

@@ -1,33 +1,57 @@
 "use client";
-import { Card, CardContent, Grid, Typography } from "@mui/material";
-import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import { Box, Grid } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { routes } from "@/utils/routes";
+import Image from "next/image";
+import moneyEmoji from "@/assets/images/moneyEmoji.jpg";
+import brandLogo from "@/assets/images/brandLogo.jpg";
+import { crimsonPro, lexend } from "@/utils/fonts";
+import { PRODUCT_NAME } from "@/utils/constants";
 
 export default function Home() {
+  const router = useRouter();
   return (
-    <Card className="mt-5">
-      <CardContent>
-        <Grid
-          container
-          rowSpacing={2}
-          columnSpacing={2}
-          className="items-center"
-        >
-          <Grid item xs={12} md={1.5}>
-            <Typography>Logo area</Typography>
-          </Grid>
-          <Grid item xs={12} md={1.5}>
-            <Typography className="cursor-pointer">
-              Personal Expenses
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={1.5}>
-            <Typography className="cursor-pointer">Group Expenses</Typography>
-          </Grid>
-          <Grid item xs={12} md={7.5} className="text-right">
-            <AccountCircleRoundedIcon className="cursor-pointer" />
-          </Grid>
+    <Box className="p-5">
+      <Grid
+        container
+        rowSpacing={2}
+        columnSpacing={2}
+        className="items-center text-white"
+      >
+        <Grid item xs={12} md={1.5}>
+          <Image src={brandLogo} alt="brand logo" width={100} height={100} />
         </Grid>
-      </CardContent>
-    </Card>
+        <Grid item xs={12} md={1.8}>
+          <p
+            className={`cursor-pointer hover:underline !text-lg ${crimsonPro.className}`}
+            onClick={() => router.push(`/${routes.personalExpenses}`)}
+          >
+            Personal Expenses
+          </p>
+        </Grid>
+        <Grid item xs={12} md={1.8}>
+          <p
+            className={`cursor-pointer hover:underline !text-lg ${crimsonPro.className}`}
+            onClick={() => router.push(`/${routes.groupExpenses}`)}
+          >
+            Group Expenses
+          </p>
+        </Grid>
+      </Grid>
+      <Box className="flex mt-5 mb-9" sx={{ borderRadius: "50px" }}>
+        <Image
+          src={moneyEmoji}
+          alt="Hero Image"
+          width={500}
+          height={500}
+          style={{ borderRadius: "50px" }}
+        />
+        <p
+          className={`w-full text-center content-center !text-6xl text-white ${lexend.className}`}
+        >
+          {PRODUCT_NAME}
+        </p>
+      </Box>
+    </Box>
   );
 }
