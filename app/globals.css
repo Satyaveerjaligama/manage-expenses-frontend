@@ -19,3 +19,34 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+p {
+  font-family: "Lexend";
+}
+
+.login-signup-card {
+  border-bottom-right-radius: 15px !important;
+  border-bottom-left-radius: 50px !important;
+  border-top-left-radius: 15px !important;
+  border-top-right-radius: 50px !important;
+}
+
+.cash-color {
+  color: rgb(101 163 13 / var(--tw-text-opacity, 1));
+}
+
+.card-color {
+  color: rgb(6 182 212 / var(--tw-text-opacity, 1));
+}
+
+.upi-color {
+  color: rgb(124 58 237 / var(--tw-text-opacity, 1));
+}
+
+.bank-color {
+  color: rgb(20 184 166 / var(--tw-text-opacity, 1));
+}
+
+.other-color {
+  color: rgb(192 38 211 / var(--tw-text-opacity, 1));
+}

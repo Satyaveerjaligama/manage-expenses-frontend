@@ -7,6 +7,7 @@ const Theme = createTheme({
         root: {
           borderRadius: "25px",
           boxShadow: "0px 1px 10px black",
+          backgroundColor: "rgb(243 244 246 / var(--tw-bg-opacity, 1))",
         },
       },
     },
@@ -22,6 +23,16 @@ const Theme = createTheme({
       styleOverrides: {
         notchedOutline: {
           borderRadius: "50px",
+        },
+        input: {
+          fontFamily: "Lexend",
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        formControl: {
+          fontFamily: "Lexend",
         },
       },
     },

@@ -1,11 +1,12 @@
 "use client";
 import Header from "@/components/Header";
-import { Button, Grid, IconButton } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import GroupCard from "./GroupCard";
 import { useState } from "react";
 import { GROUP_MODAL_TYPES } from "@/utils/constants";
 import GroupModal from "./GroupModal";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import { lexend } from "@/utils/fonts";
 
 const GroupExpensesPage = () => {
   const [open, setOpen] = useState(false);
@@ -19,13 +20,18 @@ const GroupExpensesPage = () => {
   return (
     <>
       <Header />
-      <div className="text-right mt-3">
-        <Button
-          variant="outlined"
+      <p
+        className={`text-3xl text-center !mb-5 underline text-white ${lexend.className}`}
+      >
+        Groups
+      </p>
+      <div className="text-right mt-3 px-5">
+        <p
+          className="hover:underline cursor-pointer text-sky-600"
           onClick={() => handleOpen(GROUP_MODAL_TYPES.join)}
         >
           Join Group
-        </Button>
+        </p>
       </div>
       <Grid container rowSpacing={2} columnSpacing={2} className="!mt-3 px-5">
         <Grid item xs={12} sm={6} md={4}>

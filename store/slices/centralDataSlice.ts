@@ -1,13 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { KEYS_OF_CENTRAL_DATA_SLICE } from "@/utils/constants";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const centralDataSliceInitialState = {};
+export interface Payload {
+  key: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  value: any;
+}
+
+interface CentralDataSlice {
+  userName: string;
+  emailOrPhoneNumber: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export const centralDataSliceInitialState: CentralDataSlice = {
+  userName: "",
+  emailOrPhoneNumber: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const centralDataSlice = createSlice({
   name: "centralDataSlice",
   initialState: centralDataSliceInitialState,
-  reducers: {},
+  reducers: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    updateCentralDataSlice: (state: any, action: PayloadAction<Payload>) => {
+      if (
+        Object.keys(KEYS_OF_CENTRAL_DATA_SLICE).includes(action.payload.key)
+      ) {
+        state[action?.payload?.key] = action.payload.value;
+      }
+    },
+  },
 });
 
 export default centralDataSlice.reducer;
 
-export const {} = centralDataSlice.actions;
+export const { updateCentralDataSlice } = centralDataSlice.actions;

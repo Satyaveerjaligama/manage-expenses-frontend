@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import centralDataSlice from "@/store/slices/centralDataSlice";
+import expenseSlice from "@/store/slices/expenseSlice";
+import groupExpenseSlice from "@/store/slices/groupExpenseSlice";
 
 const store = configureStore({
   reducer: {
     centralDataSlice,
+    expenseSlice,
+    groupExpenseSlice,
   },
 });
 
