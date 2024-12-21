@@ -6,12 +6,24 @@ import { Button, TextField } from "@mui/material";
 import {
   BUTTON_TYPES,
   GROUP_MODAL_TYPES,
+  KEYS_OF_ERROR_SLICE,
   KEYS_OF_GROUP_EXPENSE_SLICE,
 } from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
-import { updateGroupExpenseSlice } from "@/store/slices/groupExpenseSlice";
+import {
+  groupExpenseSliceInitialState,
+  updateGroupExpenseSlice,
+} from "@/store/slices/groupExpenseSlice";
+import {
+  createGroupSchema,
+  joinGroupSchema,
+} from "@/validations/groupExpenseValidations";
+import {
+  errorSliceInitialState,
+  updateErrorSlice,
+} from "@/store/slices/errorSlice";
 
 const style = {
   position: "absolute",
@@ -40,6 +52,38 @@ const GroupModal = (props: GroupModalProps) => {
     (state: RootState) => state.groupExpenseSlice
   );
 
+  const { createGroupErrors, joinGroupErrors } = useSelector(
+    (state: RootState) => state.errorSlice
+  );
+
+  const handleModalClose = () => {
+    handleClose();
+    dispatch(
+      updateGroupExpenseSlice({
+        key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
+        value: groupExpenseSliceInitialState.groupName,
+      })
+    );
+    dispatch(
+      updateGroupExpenseSlice({
+        key: KEYS_OF_GROUP_EXPENSE_SLICE.groupCode,
+        value: groupExpenseSliceInitialState.groupCode,
+      })
+    );
+    dispatch(
+      updateErrorSlice({
+        key: KEYS_OF_ERROR_SLICE.createGroupErrors,
+        value: errorSliceInitialState.createGroupErrors,
+      })
+    );
+    dispatch(
+      updateErrorSlice({
+        key: KEYS_OF_ERROR_SLICE.joinGroupErrors,
+        value: errorSliceInitialState.joinGroupErrors,
+      })
+    );
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFieldChange = (e: any, key: string) => {
     dispatch(
@@ -50,47 +94,82 @@ const GroupModal = (props: GroupModalProps) => {
     );
   };
 
-  const onButtonClick = (type: string) => {
+  const validateGroupName = async () => {
+    try {
+      await createGroupSchema.validate({ groupName }, { abortEarly: false });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.createGroupErrors,
+          value: errorSliceInitialState.createGroupErrors,
+        })
+      );
+      return true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const fieldErrors: { [key: string]: string } = {};
+      error.inner.forEach((err: { path: string; message: string }) => {
+        fieldErrors[err.path] = err.message;
+      });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.createGroupErrors,
+          value: fieldErrors,
+        })
+      );
+      return false;
+    }
+  };
+
+  const validateGroupCode = async () => {
+    try {
+      await joinGroupSchema.validate({ groupCode }, { abortEarly: false });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.joinGroupErrors,
+          value: errorSliceInitialState.joinGroupErrors,
+        })
+      );
+      return true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const fieldErrors: { [key: string]: string } = {};
+      error.inner.forEach((err: { path: string; message: string }) => {
+        fieldErrors[err.path] = err.message;
+      });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.joinGroupErrors,
+          value: fieldErrors,
+        })
+      );
+      return false;
+    }
+  };
+
+  const onButtonClick = async (type: string) => {
+    let isValid = false;
     switch (type) {
       case BUTTON_TYPES.create:
-        // TODO --> Validations, API call
-        handleClose();
-        dispatch(
-          updateGroupExpenseSlice({
-            key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
-            value: "",
-          })
-        );
+        isValid = await validateGroupName();
+        if (isValid) {
+          // TODO --> API call
+          handleModalClose();
+        }
         break;
       case BUTTON_TYPES.delete:
         // TODO --> API call
-        handleClose();
-        dispatch(
-          updateGroupExpenseSlice({
-            key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
-            value: "",
-          })
-        );
+        handleModalClose();
         break;
       case BUTTON_TYPES.update:
         // TODO --> Validations, API call
-        handleClose();
-        dispatch(
-          updateGroupExpenseSlice({
-            key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
-            value: "",
-          })
-        );
+        handleModalClose();
         break;
       case BUTTON_TYPES.join:
-        // TODO --> Validations, API call
-        handleClose();
-        dispatch(
-          updateGroupExpenseSlice({
-            key: KEYS_OF_GROUP_EXPENSE_SLICE.groupCode,
-            value: "",
-          })
-        );
+        isValid = await validateGroupCode();
+        if (isValid) {
+          // TODO --> API call
+          handleModalClose();
+        }
         break;
     }
   };
@@ -99,7 +178,7 @@ const GroupModal = (props: GroupModalProps) => {
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -127,6 +206,8 @@ const GroupModal = (props: GroupModalProps) => {
               onChange={(e: any) =>
                 handleFieldChange(e, KEYS_OF_GROUP_EXPENSE_SLICE.groupCode)
               }
+              error={Boolean(joinGroupErrors.groupCode)}
+              helperText={joinGroupErrors.groupCode}
             />
           ) : (
             <TextField
@@ -138,6 +219,8 @@ const GroupModal = (props: GroupModalProps) => {
               onChange={(e: any) =>
                 handleFieldChange(e, KEYS_OF_GROUP_EXPENSE_SLICE.groupName)
               }
+              error={Boolean(createGroupErrors.groupName)}
+              helperText={createGroupErrors.groupName}
             />
           )}
           {modalType === GROUP_MODAL_TYPES.create ? (

@@ -41,7 +41,7 @@ const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
             id="modal-modal-title"
             variant="h6"
             component="h2"
-            className="!font-bold !text-2xl"
+            className="!font-bold !text-xl"
             style={lexend.style}
           >
             Incoming Requests

@@ -7,6 +7,7 @@ import {
   BUTTON_TYPES,
   EXPENSE_MODAL_TYPES,
   EXPENSES_CATEGORY_MENU_ITEMS,
+  KEYS_OF_ERROR_SLICE,
   KEYS_OF_EXPENSE_SLICE,
   PAYMENT_METHODS_MENU_ITEMS,
   PAYMENT_TYPE_MENU_ITEMS,
@@ -24,6 +25,14 @@ import {
   updateExpenseSlice,
 } from "@/store/slices/expenseSlice";
 import dayjs from "dayjs";
+import {
+  addExpenseSchema,
+  addGroupExpenseSchema,
+} from "@/validations/expenseValidations";
+import {
+  errorSliceInitialState,
+  updateErrorSlice,
+} from "@/store/slices/errorSlice";
 
 const style = {
   position: "absolute",
@@ -35,6 +44,8 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: "25px",
+  overflowY: "auto",
+  maxHeight: "90vh",
 };
 
 interface ExpenseModalProps {
@@ -51,6 +62,20 @@ const ExpenseModal = (props: ExpenseModalProps) => {
   const { expenseDetails } = useSelector(
     (state: RootState) => state.expenseSlice
   );
+
+  const expenseErrors = useSelector(
+    (state: RootState) => state.errorSlice.expenseErrors
+  );
+
+  const handleModalClose = () => {
+    dispatch(
+      updateErrorSlice({
+        key: KEYS_OF_ERROR_SLICE.expenseErrors,
+        value: errorSliceInitialState.expenseErrors,
+      })
+    );
+    handleClose();
+  };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFieldChange = (e: any, key: string) => {
@@ -70,27 +95,54 @@ const ExpenseModal = (props: ExpenseModalProps) => {
         key: KEYS_OF_EXPENSE_SLICE.expenseDetails,
         value: {
           ...expenseDetails,
-          data: formattedDate === "Invalid Date" ? "" : formattedDate,
+          date: formattedDate === "Invalid Date" ? "" : formattedDate,
         },
       })
     );
   };
 
-  const onButtonClick = (type: string) => {
+  const validateExpenseData = async () => {
+    try {
+      const schema =
+        page === "group-expense" ? addGroupExpenseSchema : addExpenseSchema;
+      await schema.validate(expenseDetails, { abortEarly: false });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.expenseErrors,
+          value: errorSliceInitialState.expenseErrors,
+        })
+      );
+      return true;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const fieldErrors: { [key: string]: string } = {};
+      error.inner.forEach((err: { path: string; message: string }) => {
+        fieldErrors[err.path] = err.message;
+      });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.expenseErrors,
+          value: fieldErrors,
+        })
+      );
+      return false;
+    }
+  };
+
+  const onButtonClick = async (type: string) => {
     switch (type) {
       case BUTTON_TYPES.add:
-        // TODO --> Validations, API call
-        handleClose();
-        dispatch(clearExpenseDetails());
+      case BUTTON_TYPES.update:
+        const isValid = await validateExpenseData();
+        if (isValid) {
+          // TODO --> API call
+          handleModalClose();
+          dispatch(clearExpenseDetails());
+        }
         break;
       case BUTTON_TYPES.delete:
         // TODO --> API call
-        handleClose();
-        dispatch(clearExpenseDetails());
-        break;
-      case BUTTON_TYPES.update:
-        // TODO --> Validations, API call
-        handleClose();
+        handleModalClose();
         dispatch(clearExpenseDetails());
         break;
     }
@@ -100,7 +152,7 @@ const ExpenseModal = (props: ExpenseModalProps) => {
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -122,6 +174,8 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             className="!mt-3"
             value={expenseDetails.label}
             onChange={(e) => handleFieldChange(e, "label")}
+            error={Boolean(expenseErrors.label)}
+            helperText={expenseErrors.label}
           />
           {/* Payment types should be displayed only in group expense case */}
           {page === "group-expense" && (
@@ -133,11 +187,14 @@ const ExpenseModal = (props: ExpenseModalProps) => {
               menuItems={PAYMENT_TYPE_MENU_ITEMS}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onChange={(e: any) => handleFieldChange(e, "paymentType")}
+              error={Boolean(expenseErrors.paymentType)}
+              helperText={expenseErrors.paymentType}
             />
           )}
           <TextField
             label="Amount"
             fullWidth
+            type="number"
             className="!mt-3"
             value={expenseDetails.amount}
             onChange={(e) => handleFieldChange(e, "amount")}
@@ -148,6 +205,8 @@ const ExpenseModal = (props: ExpenseModalProps) => {
                 ),
               },
             }}
+            error={Boolean(expenseErrors.amount)}
+            helperText={expenseErrors.amount}
           />
           <DropDown
             label="Category"
@@ -157,6 +216,8 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             menuItems={EXPENSES_CATEGORY_MENU_ITEMS}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(e: any) => handleFieldChange(e, "category")}
+            error={Boolean(expenseErrors.category)}
+            helperText={expenseErrors.category}
           />
           <DropDown
             label="Payment Method"
@@ -166,6 +227,8 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             menuItems={PAYMENT_METHODS_MENU_ITEMS}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(e: any) => handleFieldChange(e, "paymentMethod")}
+            error={Boolean(expenseErrors.paymentMethod)}
+            helperText={expenseErrors.paymentMethod}
           />
           <DatePicker
             label="Date"
@@ -173,6 +236,8 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             fullWidth
             value={expenseDetails.date}
             onChange={dateChangeHandler}
+            error={Boolean(expenseErrors.date)}
+            helperText={expenseErrors.date}
           />
           {modalType === EXPENSE_MODAL_TYPES.add ? (
             <Button
