@@ -1,11 +1,24 @@
 "use client";
-import { updateCentralDataSlice } from "@/store/slices/centralDataSlice";
+import {
+  centralDataSliceInitialState,
+  updateCentralDataSlice,
+} from "@/store/slices/centralDataSlice";
+import {
+  errorSliceInitialState,
+  updateErrorSlice,
+} from "@/store/slices/errorSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import { PRODUCT_NAME } from "@/utils/constants";
+import {
+  KEYS_OF_CENTRAL_DATA_SLICE,
+  KEYS_OF_ERROR_SLICE,
+  PRODUCT_NAME,
+} from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
 import { routes } from "@/utils/routes";
+import signupSchema from "@/validations/signupValidations";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const SignUpPage = () => {
@@ -15,15 +28,69 @@ const SignUpPage = () => {
   const { userName, emailOrPhoneNumber, password, confirmPassword } =
     useSelector((state: RootState) => state.centralDataSlice);
 
+  const signUpErrors = useSelector(
+    (state: RootState) => state.errorSlice.signupErrors
+  );
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFieldChange = (e: any, key: string) => {
     dispatch(updateCentralDataSlice({ key, value: e.target.value }));
   };
 
-  const signupButtonClick = () => {
-    // TODO --> Validations and API call
-    router.push(routes.home);
+  const signupButtonClick = async () => {
+    try {
+      await signupSchema.validate(
+        { userName, emailOrPhoneNumber, password, confirmPassword },
+        { abortEarly: false }
+      );
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.signupErrors,
+          value: errorSliceInitialState.signupErrors,
+        })
+      );
+      router.push(routes.home);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const fieldErrors: { [key: string]: string } = {};
+      error.inner?.forEach((err: { path: string; message: string }) => {
+        fieldErrors[err.path] = err.message;
+      });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.signupErrors,
+          value: fieldErrors,
+        })
+      );
+    }
   };
+
+  useEffect(() => {
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.userName,
+        value: centralDataSliceInitialState.userName,
+      })
+    );
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.emailOrPhoneNumber,
+        value: centralDataSliceInitialState.emailOrPhoneNumber,
+      })
+    );
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.password,
+        value: centralDataSliceInitialState.password,
+      })
+    );
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.confirmPassword,
+        value: centralDataSliceInitialState.confirmPassword,
+      })
+    );
+  }, []);
 
   return (
     <Card
@@ -43,6 +110,8 @@ const SignUpPage = () => {
               fullWidth
               value={userName}
               onChange={(e) => handleFieldChange(e, "userName")}
+              error={Boolean(signUpErrors.userName)}
+              helperText={signUpErrors.userName}
             />
           </Grid>
           <Grid item xs={12}>
@@ -51,6 +120,8 @@ const SignUpPage = () => {
               fullWidth
               value={emailOrPhoneNumber}
               onChange={(e) => handleFieldChange(e, "emailOrPhoneNumber")}
+              error={Boolean(signUpErrors.emailOrPhoneNumber)}
+              helperText={signUpErrors.emailOrPhoneNumber}
             />
           </Grid>
           <Grid item xs={12}>
@@ -60,6 +131,8 @@ const SignUpPage = () => {
               value={password}
               type="password"
               onChange={(e) => handleFieldChange(e, "password")}
+              error={Boolean(signUpErrors.password)}
+              helperText={signUpErrors.password}
             />
           </Grid>
           <Grid item xs={12}>
@@ -69,6 +142,8 @@ const SignUpPage = () => {
               value={confirmPassword}
               type="password"
               onChange={(e) => handleFieldChange(e, "confirmPassword")}
+              error={Boolean(signUpErrors.confirmPassword)}
+              helperText={signUpErrors.confirmPassword}
             />
           </Grid>
           <Grid item xs={12}>

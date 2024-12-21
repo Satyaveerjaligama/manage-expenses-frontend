@@ -1,13 +1,25 @@
 "use client";
 import Snackbar from "@/components/SnackBar";
-import { updateCentralDataSlice } from "@/store/slices/centralDataSlice";
+import {
+  centralDataSliceInitialState,
+  updateCentralDataSlice,
+} from "@/store/slices/centralDataSlice";
+import {
+  errorSliceInitialState,
+  updateErrorSlice,
+} from "@/store/slices/errorSlice";
 import { AppDispatch, RootState } from "@/store/store";
-import { PRODUCT_NAME } from "@/utils/constants";
+import {
+  KEYS_OF_CENTRAL_DATA_SLICE,
+  KEYS_OF_ERROR_SLICE,
+  PRODUCT_NAME,
+} from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
 import { routes } from "@/utils/routes";
+import loginSchema from "@/validations/loginValidations";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const LoginPage = () => {
@@ -20,15 +32,58 @@ const LoginPage = () => {
     (state: RootState) => state.centralDataSlice
   );
 
+  const loginErrors = useSelector(
+    (state: RootState) => state.errorSlice.loginErrors
+  );
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleFieldChange = (e: any, key: string) => {
     dispatch(updateCentralDataSlice({ key, value: e.target.value }));
   };
 
-  const loginButtonClick = () => {
+  const loginButtonClick = async () => {
     // TODO --> Validations and API call
-    router.push(routes.home);
+    try {
+      await loginSchema.validate(
+        { emailOrPhoneNumber, password },
+        { abortEarly: false }
+      );
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.loginErrors,
+          value: errorSliceInitialState.loginErrors,
+        })
+      );
+      router.push(routes.home);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const fieldErrors: { [key: string]: string } = {};
+      error.inner?.forEach((err: { path: string; message: string }) => {
+        fieldErrors[err.path] = err.message;
+      });
+      dispatch(
+        updateErrorSlice({
+          key: KEYS_OF_ERROR_SLICE.loginErrors,
+          value: fieldErrors,
+        })
+      );
+    }
   };
+
+  useEffect(() => {
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.emailOrPhoneNumber,
+        value: centralDataSliceInitialState.emailOrPhoneNumber,
+      })
+    );
+    dispatch(
+      updateCentralDataSlice({
+        key: KEYS_OF_CENTRAL_DATA_SLICE.password,
+        value: centralDataSliceInitialState.password,
+      })
+    );
+  }, []);
 
   return (
     <>
@@ -50,6 +105,8 @@ const LoginPage = () => {
                 fullWidth
                 value={emailOrPhoneNumber}
                 onChange={(e) => handleFieldChange(e, "emailOrPhoneNumber")}
+                error={Boolean(loginErrors.emailOrPhoneNumber)}
+                helperText={loginErrors.emailOrPhoneNumber}
               />
             </Grid>
             <Grid item xs={12}>
@@ -59,6 +116,8 @@ const LoginPage = () => {
                 value={password}
                 type="password"
                 onChange={(e) => handleFieldChange(e, "password")}
+                error={Boolean(loginErrors.password)}
+                helperText={loginErrors.password}
               />
             </Grid>
             <Grid item xs={12} className="!flex !justify-between !text-sm">

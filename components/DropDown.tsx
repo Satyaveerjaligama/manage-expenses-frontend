@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 interface DropDownProps {
   label: string;
@@ -12,11 +18,22 @@ interface DropDownProps {
     label: string;
     value: string | number;
   }[];
+  error?: boolean;
+  helperText?: string;
 }
 
 const DropDown = (props: DropDownProps) => {
-  const { label, value, onChange, menuItems, disabled, fullWidth, className } =
-    props;
+  const {
+    label,
+    value,
+    onChange,
+    menuItems,
+    disabled,
+    fullWidth,
+    className,
+    error,
+    helperText,
+  } = props;
   return (
     <FormControl fullWidth={fullWidth} className={className}>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
@@ -27,6 +44,7 @@ const DropDown = (props: DropDownProps) => {
         label={label}
         onChange={onChange}
         disabled={disabled}
+        error={error}
       >
         {menuItems.map((singleItem) => (
           <MenuItem value={singleItem.value} key={singleItem.value}>
@@ -34,6 +52,7 @@ const DropDown = (props: DropDownProps) => {
           </MenuItem>
         ))}
       </Select>
+      <FormHelperText error={error}>{helperText}</FormHelperText>
     </FormControl>
   );
 };

@@ -115,3 +115,19 @@ export const KEYS_OF_GROUP_EXPENSE_SLICE = {
   groupName: "groupName",
   groupCode: "groupCode",
 };
+
+export const KEYS_OF_ERROR_SLICE = {
+  loginErrors: "loginErrors",
+  signupErrors: "signupErrors",
+  expenseErrors: "expenseErrors",
+  createGroupErrors: "createGroupErrors",
+  joinGroupErrors: "joinGroupErrors",
+  addAmountErrors: "addAmountErrors",
+};
+
+export const REGULAR_EXPRESSIONS = {
+  LETTERS_AND_NUMBERS: /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/,
+  EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  PHONE_NUMBER: /^[5-9][0-9]{9}$/,
+  NUMBERS: /^[0-9]+$/,
+};

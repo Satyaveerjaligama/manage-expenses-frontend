@@ -7,7 +7,7 @@ import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
 import SummarySection from "@/components/SummarySection";
 import ExpenseModal from "@/components/ExpenseModal";
 import ExpenseCard from "@/components/ExpenseCard";
-import EditGroupExpenseModal from "./EditGroupExpenseModa";
+import EditGroupExpenseModal from "./EditGroupExpenseModal";
 import IncomingRequestsModal from "./IncomingRequestsModal";
 import { lexend } from "@/utils/fonts";
 

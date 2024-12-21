@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Payload } from "./centralDataSlice";
 import { KEYS_OF_GROUP_EXPENSE_SLICE } from "@/utils/constants";
 
-const groupExpenseSliceInitialState = {
+export const groupExpenseSliceInitialState = {
   groupName: "",
   groupCode: "",
 };

@@ -50,3 +50,8 @@ p {
 .other-color {
   color: rgb(192 38 211 / var(--tw-text-opacity, 1));
 }
+
+.date-picker-helper-text {
+  margin-left: 14px !important;
+  margin-right: 14px !important;
+}
