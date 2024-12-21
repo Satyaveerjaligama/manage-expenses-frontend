@@ -5,7 +5,7 @@ import { routes } from "@/utils/routes";
 import Image from "next/image";
 import moneyEmoji from "@/assets/images/moneyEmoji.jpg";
 import brandLogo from "@/assets/images/brandLogo.jpg";
-import { crimsonPro, lexend } from "@/utils/fonts";
+import { lexend } from "@/utils/fonts";
 import { PRODUCT_NAME } from "@/utils/constants";
 
 export default function Home() {
@@ -19,20 +19,26 @@ export default function Home() {
         className="items-center text-white"
       >
         <Grid item xs={12} md={1.5}>
-          <Image src={brandLogo} alt="brand logo" width={100} height={100} />
+          <Image
+            src={brandLogo}
+            alt="brand logo"
+            width={100}
+            height={100}
+            style={{ borderRadius: "50px" }}
+          />
         </Grid>
         <Grid item xs={12} md={1.8}>
           <p
-            className={`cursor-pointer hover:underline !text-lg ${crimsonPro.className}`}
-            onClick={() => router.push(`/${routes.personalExpenses}`)}
+            className={`cursor-pointer hover:underline !text-base`}
+            onClick={() => router.push(`${routes.login}`)}
           >
             Personal Expenses
           </p>
         </Grid>
         <Grid item xs={12} md={1.8}>
           <p
-            className={`cursor-pointer hover:underline !text-lg ${crimsonPro.className}`}
-            onClick={() => router.push(`/${routes.groupExpenses}`)}
+            className={`cursor-pointer hover:underline !text-base`}
+            onClick={() => router.push(`${routes.login}`)}
           >
             Group Expenses
           </p>

@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { Divider, IconButton } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
-import { crimsonPro, lexend } from "@/utils/fonts";
+import { lexend } from "@/utils/fonts";
 
 const style = {
   position: "absolute",
@@ -42,7 +42,7 @@ const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
             variant="h6"
             component="h2"
             className="!font-bold !text-2xl"
-            style={crimsonPro.style}
+            style={lexend.style}
           >
             Incoming Requests
           </Typography>
@@ -50,10 +50,10 @@ const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
           <div className="flex justify-between !mt-3">
             <Typography style={lexend.style}>User one</Typography>
             <div>
-              <IconButton>
+              <IconButton className="!text-green-500">
                 <DoneRoundedIcon />
               </IconButton>
-              <IconButton>
+              <IconButton className="!text-rose-600">
                 <CloseRoundedIcon />
               </IconButton>
             </div>
@@ -62,10 +62,10 @@ const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
           <div className="flex justify-between !mt-3">
             <Typography style={lexend.style}>User two</Typography>
             <div>
-              <IconButton>
+              <IconButton className="!text-green-500">
                 <DoneRoundedIcon />
               </IconButton>
-              <IconButton>
+              <IconButton className="!text-rose-600">
                 <CloseRoundedIcon />
               </IconButton>
             </div>

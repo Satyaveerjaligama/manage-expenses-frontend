@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Button, Divider, InputAdornment, TextField } from "@mui/material";
-import { crimsonPro } from "@/utils/fonts";
+import { lexend } from "@/utils/fonts";
 
 const style = {
   position: "absolute",
@@ -41,23 +41,23 @@ const EditGroupExpenseModal = (props: EditGroupExpenseModalProps) => {
             variant="h6"
             component="h2"
             className="!font-bold !text-2xl"
-            style={crimsonPro.style}
+            style={lexend.style}
           >
             {label}
           </Typography>
           <Divider className="!mt-3" />
           <div className="flex justify-between !mt-3">
-            <Typography>Total Amount</Typography>
-            <Typography>&#8377;20000</Typography>
+            <p>Total Amount</p>
+            <p>&#8377;20000</p>
           </div>
           <div className="flex justify-between !mt-3">
-            <Typography>Amount Paid</Typography>
-            <Typography>&#8377;10000</Typography>
+            <p>Amount Paid</p>
+            <p>&#8377;10000</p>
           </div>
           <Divider className="!mt-3" />
           <div className="flex justify-between !mt-3">
-            <Typography>Advance</Typography>
-            <Typography>&#8377;10000</Typography>
+            <p>Advance</p>
+            <p>&#8377;10000</p>
           </div>
           <TextField
             label="Amount"
@@ -71,7 +71,12 @@ const EditGroupExpenseModal = (props: EditGroupExpenseModalProps) => {
               },
             }}
           />
-          <Button variant="contained" className="!mt-5" fullWidth>
+          <Button
+            variant="contained"
+            className="!mt-5"
+            fullWidth
+            style={lexend.style}
+          >
             Add
           </Button>
         </Box>

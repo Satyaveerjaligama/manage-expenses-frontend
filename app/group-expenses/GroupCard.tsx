@@ -1,4 +1,4 @@
-import { Card, CardContent, IconButton, Typography } from "@mui/material";
+import { Card, CardContent, IconButton } from "@mui/material";
 import MoreVertRoundedIcon from "@mui/icons-material/MoreVertRounded";
 import { GROUP_MODAL_TYPES } from "@/utils/constants";
 import PeopleRoundedIcon from "@mui/icons-material/PeopleRounded";
@@ -16,14 +16,14 @@ const GroupCard = (props: GroupCardProps) => {
     <Card>
       <CardContent>
         <div className="flex justify-between items-center">
-          <Typography>{groupLabel}</Typography>
+          <p className="!font-bold !text-lg">{groupLabel}</p>
           <IconButton onClick={() => handleOpen(GROUP_MODAL_TYPES.edit)}>
             <MoreVertRoundedIcon />
           </IconButton>
         </div>
         <div className="flex">
           <PeopleRoundedIcon />
-          <Typography className="pl-2">{members}</Typography>
+          <p className="pl-2">{members} members</p>
         </div>
       </CardContent>
     </Card>
