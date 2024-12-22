@@ -12,6 +12,7 @@ interface CentralDataSlice {
   emailOrPhoneNumber: string;
   password: string;
   confirmPassword: string;
+  userId: string;
 }
 
 export const centralDataSliceInitialState: CentralDataSlice = {
@@ -19,6 +20,7 @@ export const centralDataSliceInitialState: CentralDataSlice = {
   emailOrPhoneNumber: "",
   password: "",
   confirmPassword: "",
+  userId: "",
 };
 
 const centralDataSlice = createSlice({

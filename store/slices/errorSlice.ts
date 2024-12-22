@@ -14,7 +14,7 @@ interface ErrorSlice {
     confirmPassword: string;
   };
   expenseErrors: {
-    label: string;
+    expenseName: string;
     amount: string;
     category: string;
     paymentMethod: string;
@@ -44,7 +44,7 @@ export const errorSliceInitialState: ErrorSlice = {
     confirmPassword: "",
   },
   expenseErrors: {
-    label: "",
+    expenseName: "",
     amount: "",
     category: "",
     paymentMethod: "",

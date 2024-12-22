@@ -97,10 +97,12 @@ export const KEYS_OF_CENTRAL_DATA_SLICE = {
   emailOrPhoneNumber: "emailOrPhoneNumber",
   password: "password",
   confirmPassword: "confirmPassword",
+  userId: "userId",
 };
 
 export const KEYS_OF_EXPENSE_SLICE = {
   expenseDetails: "expenseDetails",
+  expensesList: "expensesList",
 };
 
 export const BUTTON_TYPES = {
@@ -137,6 +139,8 @@ export const REGULAR_EXPRESSIONS = {
 };
 
 export const API_END_POINTS = {
-  login: "login",
-  signup: "signup",
+  LOGIN: "login",
+  SIGNUP: "signup",
+  GET_USER_EXPENSES: "user-expenses",
+  ADD_EXPENSE: "add-expense",
 };

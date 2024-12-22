@@ -11,7 +11,7 @@ const signup = createAsyncThunk("login", async (router: any, thunkAPI) => {
     state.centralDataSlice;
   const requestConfig = {
     method: "POST",
-    url: `${process.env.API_URL}/${API_END_POINTS.signup}`,
+    url: `${process.env.API_URL}/${API_END_POINTS.SIGNUP}`,
     data: {
       userName,
       emailOrPhoneNumber,

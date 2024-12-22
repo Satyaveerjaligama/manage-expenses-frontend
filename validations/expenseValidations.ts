@@ -2,7 +2,7 @@ import { REGULAR_EXPRESSIONS } from "@/utils/constants";
 import * as yup from "yup";
 
 export const addExpenseSchema = yup.object().shape({
-  label: yup
+  expenseName: yup
     .string()
     .matches(
       REGULAR_EXPRESSIONS.LETTERS_AND_NUMBERS,

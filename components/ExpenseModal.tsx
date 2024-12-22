@@ -33,6 +33,7 @@ import {
   errorSliceInitialState,
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
+import addExpense from "@/store/thunks/addExpense";
 
 const style = {
   position: "absolute",
@@ -135,9 +136,14 @@ const ExpenseModal = (props: ExpenseModalProps) => {
       case BUTTON_TYPES.update:
         const isValid = await validateExpenseData();
         if (isValid) {
-          // TODO --> API call
-          handleModalClose();
-          dispatch(clearExpenseDetails());
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response: any = await dispatch(
+            addExpense(page === "group-expense" ? true : false)
+          );
+          if (response?.payload === 201) {
+            handleModalClose();
+            dispatch(clearExpenseDetails());
+          }
         }
         break;
       case BUTTON_TYPES.delete:
@@ -172,10 +178,10 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             label="Label"
             fullWidth
             className="!mt-3"
-            value={expenseDetails.label}
-            onChange={(e) => handleFieldChange(e, "label")}
-            error={Boolean(expenseErrors.label)}
-            helperText={expenseErrors.label}
+            value={expenseDetails.expenseName}
+            onChange={(e) => handleFieldChange(e, "expenseName")}
+            error={Boolean(expenseErrors.expenseName)}
+            helperText={expenseErrors.expenseName}
           />
           {/* Payment types should be displayed only in group expense case */}
           {page === "group-expense" && (
