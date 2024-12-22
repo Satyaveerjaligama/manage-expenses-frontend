@@ -116,6 +116,7 @@ export const BUTTON_TYPES = {
 export const KEYS_OF_GROUP_EXPENSE_SLICE = {
   groupName: "groupName",
   groupCode: "groupCode",
+  groupsList: "groupsList",
 };
 
 export const KEYS_OF_ERROR_SLICE = {
@@ -142,7 +143,11 @@ export const API_END_POINTS = {
   LOGIN: "login",
   SIGNUP: "signup",
   GET_USER_EXPENSES: "user-expenses",
+  GET_USER_GROUPS: "user-groups",
   ADD_EXPENSE: "add-expense",
   DELETE_EXPENSE: "delete-expense",
+  DELETE_GROUP: "delete-group",
   UPDATE_EXPENSE: "update-expense",
+  UPDATE_GROUP: "update-group",
+  CREATE_ACCOUNT: "create-group",
 };

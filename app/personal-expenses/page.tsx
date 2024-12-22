@@ -11,7 +11,10 @@ import { lexend } from "@/utils/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import getUserExpenses from "@/store/thunks/getUserExpenses";
 import { AppDispatch, RootState } from "@/store/store";
-import { updateExpenseSlice } from "@/store/slices/expenseSlice";
+import {
+  expenseSliceInitialState,
+  updateExpenseSlice,
+} from "@/store/slices/expenseSlice";
 import dayjs from "dayjs";
 
 const PersonalExpensesPage = () => {
@@ -22,7 +25,23 @@ const PersonalExpensesPage = () => {
     setModalType(incomingModalType);
     setOpen(true);
   };
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    dispatch(
+      updateExpenseSlice({
+        key: KEYS_OF_EXPENSE_SLICE.expenseDetails,
+        value: {
+          expenseId: expenseSliceInitialState.expenseDetails.expenseId,
+          expenseName: expenseSliceInitialState.expenseDetails.expenseName,
+          amount: expenseSliceInitialState.expenseDetails.amount,
+          category: expenseSliceInitialState.expenseDetails.category,
+          paymentMethod: expenseSliceInitialState.expenseDetails.paymentMethod,
+          paymentType: expenseSliceInitialState.expenseDetails.paymentType,
+          date: expenseSliceInitialState.expenseDetails.date,
+        },
+      })
+    );
+    setOpen(false);
+  };
   const userId = useSelector(
     (state: RootState) => state.centralDataSlice.userId
   );

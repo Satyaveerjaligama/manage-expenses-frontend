@@ -26,7 +26,7 @@ const updateExpense = createAsyncThunk(
 
     try {
       const response = await axios(requestConfig);
-      if (response.status === 201) {
+      if (response.status === 200) {
         thunkAPI.dispatch(
           updateUtilitySlice({
             key: KEYS_OF_UTILITY_SLICE.snackBar,
