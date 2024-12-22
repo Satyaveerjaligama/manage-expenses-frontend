@@ -55,3 +55,7 @@ p {
   margin-left: 14px !important;
   margin-right: 14px !important;
 }
+
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
