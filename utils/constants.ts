@@ -144,4 +144,5 @@ export const API_END_POINTS = {
   GET_USER_EXPENSES: "user-expenses",
   ADD_EXPENSE: "add-expense",
   DELETE_EXPENSE: "delete-expense",
+  UPDATE_EXPENSE: "update-expense",
 };

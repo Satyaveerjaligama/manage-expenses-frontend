@@ -35,6 +35,7 @@ import {
 } from "@/store/slices/errorSlice";
 import addExpense from "@/store/thunks/addExpense";
 import deleteExpense from "@/store/thunks/deleteExpense";
+import updateExpense from "@/store/thunks/updateExpense";
 
 const style = {
   position: "absolute",
@@ -132,10 +133,10 @@ const ExpenseModal = (props: ExpenseModalProps) => {
   };
 
   const onButtonClick = async (type: string) => {
+    let isValid;
     switch (type) {
       case BUTTON_TYPES.add:
-      case BUTTON_TYPES.update:
-        const isValid = await validateExpenseData();
+        isValid = await validateExpenseData();
         if (isValid) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const response: any = await dispatch(
@@ -145,6 +146,14 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             handleModalClose();
             dispatch(clearExpenseDetails());
           }
+        }
+        break;
+      case BUTTON_TYPES.update:
+        isValid = await validateExpenseData();
+        if (isValid) {
+          await dispatch(updateExpense(expenseDetails.expenseId));
+          handleModalClose();
+          dispatch(clearExpenseDetails());
         }
         break;
       case BUTTON_TYPES.delete:

@@ -5,7 +5,7 @@ import { RootState } from "../store";
 import { routes } from "@/utils/routes";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const signup = createAsyncThunk("login", async (router: any, thunkAPI) => {
+const signup = createAsyncThunk("signup", async (router: any, thunkAPI) => {
   const state = thunkAPI.getState() as RootState;
   const { userName, emailOrPhoneNumber, password, confirmPassword } =
     state.centralDataSlice;
