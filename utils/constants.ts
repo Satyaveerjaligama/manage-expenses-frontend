@@ -131,3 +131,8 @@ export const REGULAR_EXPRESSIONS = {
   PHONE_NUMBER: /^[5-9][0-9]{9}$/,
   NUMBERS: /^[0-9]+$/,
 };
+
+export const API_END_POINTS = {
+  login: "login",
+  signup: "signup",
+};

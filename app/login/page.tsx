@@ -9,6 +9,7 @@ import {
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import login from "@/store/thunks/login";
 import {
   KEYS_OF_CENTRAL_DATA_SLICE,
   KEYS_OF_ERROR_SLICE,
@@ -42,7 +43,6 @@ const LoginPage = () => {
   };
 
   const loginButtonClick = async () => {
-    // TODO --> Validations and API call
     try {
       await loginSchema.validate(
         { emailOrPhoneNumber, password },
@@ -54,7 +54,7 @@ const LoginPage = () => {
           value: errorSliceInitialState.loginErrors,
         })
       );
-      router.push(routes.home);
+      await dispatch(login(router));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const fieldErrors: { [key: string]: string } = {};

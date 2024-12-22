@@ -8,13 +8,13 @@ import {
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
 import { AppDispatch, RootState } from "@/store/store";
+import signup from "@/store/thunks/signup";
 import {
   KEYS_OF_CENTRAL_DATA_SLICE,
   KEYS_OF_ERROR_SLICE,
   PRODUCT_NAME,
 } from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
-import { routes } from "@/utils/routes";
 import signupSchema from "@/validations/signupValidations";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -49,7 +49,7 @@ const SignUpPage = () => {
           value: errorSliceInitialState.signupErrors,
         })
       );
-      router.push(routes.home);
+      await dispatch(signup(router));
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const fieldErrors: { [key: string]: string } = {};
