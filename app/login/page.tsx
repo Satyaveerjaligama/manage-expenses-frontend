@@ -8,11 +8,13 @@ import {
   errorSliceInitialState,
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
+import { updateUtilitySlice } from "@/store/slices/utilitySlice";
 import { AppDispatch, RootState } from "@/store/store";
 import login from "@/store/thunks/login";
 import {
   KEYS_OF_CENTRAL_DATA_SLICE,
   KEYS_OF_ERROR_SLICE,
+  KEYS_OF_UTILITY_SLICE,
   PRODUCT_NAME,
 } from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
@@ -20,14 +22,12 @@ import { routes } from "@/utils/routes";
 import loginSchema from "@/validations/loginValidations";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const LoginPage = () => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const [open, setOpen] = useState(false);
-  const [snackBarMessage, setSnackBarMessage] = useState("");
 
   const { emailOrPhoneNumber, password } = useSelector(
     (state: RootState) => state.centralDataSlice
@@ -87,7 +87,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <Snackbar open={open} setOpen={setOpen} message={snackBarMessage} />
+      <Snackbar />
       <Card
         className="w-2/5 absolute top-2/4 left-2/4 login-signup-card"
         sx={{ transform: "translate(-50%, -50%)" }}
@@ -124,8 +124,16 @@ const LoginPage = () => {
               <p
                 className="hover:underline cursor-pointer hover:text-sky-600"
                 onClick={() => {
-                  setOpen(true);
-                  setSnackBarMessage("Functionality not available right now");
+                  dispatch(
+                    updateUtilitySlice({
+                      key: KEYS_OF_UTILITY_SLICE.snackBar,
+                      value: {
+                        open: true,
+                        message: "Functionality not available right now",
+                        status: "info",
+                      },
+                    })
+                  );
                 }}
               >
                 Forget Password
