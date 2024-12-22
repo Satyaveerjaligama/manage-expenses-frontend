@@ -15,6 +15,7 @@ import {
   PRODUCT_NAME,
 } from "@/utils/constants";
 import { lexend } from "@/utils/fonts";
+import { routes } from "@/utils/routes";
 import signupSchema from "@/validations/signupValidations";
 import { Button, Card, CardContent, Grid, TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -146,6 +147,12 @@ const SignUpPage = () => {
               helperText={signUpErrors.confirmPassword}
             />
           </Grid>
+          <p
+            className="hover:underline cursor-pointer hover:text-sky-600 text-right w-full mt-4"
+            onClick={() => router.push(routes.login)}
+          >
+            Already have an account ?
+          </p>
           <Grid item xs={12}>
             <Button
               variant="contained"

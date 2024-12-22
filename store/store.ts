@@ -3,6 +3,7 @@ import centralDataSlice from "@/store/slices/centralDataSlice";
 import expenseSlice from "@/store/slices/expenseSlice";
 import groupExpenseSlice from "@/store/slices/groupExpenseSlice";
 import errorSlice from "@/store/slices/errorSlice";
+import utilitySlice from "@/store/slices/utilitySlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     expenseSlice,
     groupExpenseSlice,
     errorSlice,
+    utilitySlice,
   },
 });
 

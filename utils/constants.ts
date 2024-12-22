@@ -125,6 +125,10 @@ export const KEYS_OF_ERROR_SLICE = {
   addAmountErrors: "addAmountErrors",
 };
 
+export const KEYS_OF_UTILITY_SLICE = {
+  snackBar: "snackBar",
+};
+
 export const REGULAR_EXPRESSIONS = {
   LETTERS_AND_NUMBERS: /^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/,
   EMAIL: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,

@@ -1,18 +1,25 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import MuiSnackbar from "@mui/material/Snackbar";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import { updateUtilitySlice } from "@/store/slices/utilitySlice";
+import { KEYS_OF_UTILITY_SLICE } from "@/utils/constants";
+import { Alert } from "@mui/material";
 
-interface SnackBarProps {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-  message: string;
-}
-
-const Snackbar = (props: SnackBarProps) => {
-  const { open, setOpen, message } = props;
+const Snackbar = () => {
+  const dispatch = useDispatch();
+  const { open, message, status } = useSelector(
+    (state: RootState) => state.utilitySlice.snackBar
+  );
 
   const handleClose = () => {
-    setOpen(false);
+    dispatch(
+      updateUtilitySlice({
+        key: KEYS_OF_UTILITY_SLICE.snackBar,
+        value: { open: false, message, status },
+      })
+    );
   };
 
   return (
@@ -21,9 +28,17 @@ const Snackbar = (props: SnackBarProps) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         open={open}
         onClose={handleClose}
-        message={message}
         autoHideDuration={3000}
-      />
+      >
+        <Alert
+          onClose={handleClose}
+          severity={status}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </MuiSnackbar>
     </Box>
   );
 };
