@@ -34,6 +34,7 @@ import {
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
 import addExpense from "@/store/thunks/addExpense";
+import deleteExpense from "@/store/thunks/deleteExpense";
 
 const style = {
   position: "absolute",
@@ -147,7 +148,7 @@ const ExpenseModal = (props: ExpenseModalProps) => {
         }
         break;
       case BUTTON_TYPES.delete:
-        // TODO --> API call
+        await dispatch(deleteExpense(expenseDetails.expenseId));
         handleModalClose();
         dispatch(clearExpenseDetails());
         break;

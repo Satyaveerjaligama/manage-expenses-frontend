@@ -5,12 +5,14 @@ import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import ExpenseModal from "../../components/ExpenseModal";
 import { useEffect, useState } from "react";
-import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
+import { EXPENSE_MODAL_TYPES, KEYS_OF_EXPENSE_SLICE } from "@/utils/constants";
 import ExpenseCard from "@/components/ExpenseCard";
 import { lexend } from "@/utils/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import getUserExpenses from "@/store/thunks/getUserExpenses";
 import { AppDispatch, RootState } from "@/store/store";
+import { updateExpenseSlice } from "@/store/slices/expenseSlice";
+import dayjs from "dayjs";
 
 const PersonalExpensesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -54,7 +56,23 @@ const PersonalExpensesPage = () => {
               label={expense.expenseName}
               amount={expense.amount}
               date={expense.date}
-              handleOpen={handleOpen}
+              handleOpen={(modalType: string) => {
+                dispatch(
+                  updateExpenseSlice({
+                    key: KEYS_OF_EXPENSE_SLICE.expenseDetails,
+                    value: {
+                      expenseId: expense.expenseId,
+                      expenseName: expense.expenseName,
+                      amount: expense.amount,
+                      category: expense.category,
+                      paymentMethod: expense.paymentMethod,
+                      paymentType: expense.paymentType,
+                      date: dayjs(expense.date).format("DD/MM/YYYY"),
+                    },
+                  })
+                );
+                handleOpen(modalType);
+              }}
               paymentMethod={expense.paymentMethod}
             />
           </Grid>

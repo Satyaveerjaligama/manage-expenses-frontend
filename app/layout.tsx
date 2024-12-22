@@ -5,6 +5,7 @@ import { ThemeProvider } from "@mui/material";
 import Theme from "@/styles/Theme";
 import { Provider } from "react-redux";
 import store from "@/store/store";
+import Snackbar from "@/components/SnackBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          <ThemeProvider theme={Theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={Theme}>
+            <Snackbar />
+            {children}
+          </ThemeProvider>
         </Provider>
       </body>
     </html>

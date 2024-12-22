@@ -4,6 +4,7 @@ import { KEYS_OF_EXPENSE_SLICE } from "@/utils/constants";
 
 interface ExpenseSliceProps {
   expenseDetails: {
+    expenseId: string;
     expenseName: string;
     amount: string;
     category: string;
@@ -26,6 +27,7 @@ interface ExpenseSliceProps {
 
 export const expenseSliceInitialState: ExpenseSliceProps = {
   expenseDetails: {
+    expenseId: "",
     expenseName: "",
     amount: "",
     category: "",
