@@ -148,7 +148,7 @@ const SignUpPage = () => {
             />
           </Grid>
           <p
-            className="hover:underline cursor-pointer hover:text-sky-600 text-right w-full mt-4"
+            className="hover:underline cursor-pointer hover:text-sky-600 text-right w-full mt-4 text-sm"
             onClick={() => router.push(routes.login)}
           >
             Already have an account ?

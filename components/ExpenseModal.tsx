@@ -33,6 +33,9 @@ import {
   errorSliceInitialState,
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
+import addExpense from "@/store/thunks/addExpense";
+import deleteExpense from "@/store/thunks/deleteExpense";
+import updateExpense from "@/store/thunks/updateExpense";
 
 const style = {
   position: "absolute",
@@ -130,18 +133,31 @@ const ExpenseModal = (props: ExpenseModalProps) => {
   };
 
   const onButtonClick = async (type: string) => {
+    let isValid;
     switch (type) {
       case BUTTON_TYPES.add:
-      case BUTTON_TYPES.update:
-        const isValid = await validateExpenseData();
+        isValid = await validateExpenseData();
         if (isValid) {
-          // TODO --> API call
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const response: any = await dispatch(
+            addExpense(page === "group-expense" ? true : false)
+          );
+          if (response?.payload === 201) {
+            handleModalClose();
+            dispatch(clearExpenseDetails());
+          }
+        }
+        break;
+      case BUTTON_TYPES.update:
+        isValid = await validateExpenseData();
+        if (isValid) {
+          await dispatch(updateExpense(expenseDetails.expenseId));
           handleModalClose();
           dispatch(clearExpenseDetails());
         }
         break;
       case BUTTON_TYPES.delete:
-        // TODO --> API call
+        await dispatch(deleteExpense(expenseDetails.expenseId));
         handleModalClose();
         dispatch(clearExpenseDetails());
         break;
@@ -172,10 +188,10 @@ const ExpenseModal = (props: ExpenseModalProps) => {
             label="Label"
             fullWidth
             className="!mt-3"
-            value={expenseDetails.label}
-            onChange={(e) => handleFieldChange(e, "label")}
-            error={Boolean(expenseErrors.label)}
-            helperText={expenseErrors.label}
+            value={expenseDetails.expenseName}
+            onChange={(e) => handleFieldChange(e, "expenseName")}
+            error={Boolean(expenseErrors.expenseName)}
+            helperText={expenseErrors.expenseName}
           />
           {/* Payment types should be displayed only in group expense case */}
           {page === "group-expense" && (

@@ -4,24 +4,38 @@ import { KEYS_OF_EXPENSE_SLICE } from "@/utils/constants";
 
 interface ExpenseSliceProps {
   expenseDetails: {
-    label: string;
+    expenseId: string;
+    expenseName: string;
     amount: string;
     category: string;
     paymentMethod: string;
     paymentType: string;
     date: string;
   };
+  expensesList: {
+    expenseId: string;
+    userOrGroupId: string;
+    expenseName: string;
+    amount: number;
+    category: string;
+    paymentMethod: string;
+    date: string;
+    paymentType?: string;
+    addedBy?: string;
+  }[];
 }
 
 export const expenseSliceInitialState: ExpenseSliceProps = {
   expenseDetails: {
-    label: "",
+    expenseId: "",
+    expenseName: "",
     amount: "",
     category: "",
     paymentMethod: "",
     paymentType: "",
     date: "",
   },
+  expensesList: [],
 };
 
 const expenseSlice = createSlice({

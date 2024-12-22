@@ -24,6 +24,9 @@ import {
   errorSliceInitialState,
   updateErrorSlice,
 } from "@/store/slices/errorSlice";
+import createGroup from "@/store/thunks/createGroup";
+import updateGroup from "@/store/thunks/updateGroup";
+import deleteGroup from "@/store/thunks/deleteGroup";
 
 const style = {
   position: "absolute",
@@ -152,17 +155,20 @@ const GroupModal = (props: GroupModalProps) => {
       case BUTTON_TYPES.create:
         isValid = await validateGroupName();
         if (isValid) {
-          // TODO --> API call
+          await dispatch(createGroup());
           handleModalClose();
         }
         break;
       case BUTTON_TYPES.delete:
-        // TODO --> API call
+        await dispatch(deleteGroup());
         handleModalClose();
         break;
       case BUTTON_TYPES.update:
-        // TODO --> Validations, API call
-        handleModalClose();
+        isValid = await validateGroupName();
+        if (isValid) {
+          await dispatch(updateGroup());
+          handleModalClose();
+        }
         break;
       case BUTTON_TYPES.join:
         isValid = await validateGroupCode();
