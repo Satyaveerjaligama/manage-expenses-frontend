@@ -27,6 +27,7 @@ import {
 import createGroup from "@/store/thunks/createGroup";
 import updateGroup from "@/store/thunks/updateGroup";
 import deleteGroup from "@/store/thunks/deleteGroup";
+import joinGroup from "@/store/thunks/joinGroup";
 
 const style = {
   position: "absolute",
@@ -173,7 +174,7 @@ const GroupModal = (props: GroupModalProps) => {
       case BUTTON_TYPES.join:
         isValid = await validateGroupCode();
         if (isValid) {
-          // TODO --> API call
+          await dispatch(joinGroup());
           handleModalClose();
         }
         break;

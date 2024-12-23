@@ -10,8 +10,12 @@ import ExpenseCard from "@/components/ExpenseCard";
 import EditGroupExpenseModal from "./EditGroupExpenseModal";
 import IncomingRequestsModal from "./IncomingRequestsModal";
 import { lexend } from "@/utils/fonts";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/store/store";
+import fetchJoinRequests from "@/store/thunks/fetchJoinRequests";
 
 const GroupPage = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState(EXPENSE_MODAL_TYPES.add);
   const [openGroupExpenseModal, setOpenGroupExpenseModal] = useState(false);
@@ -22,7 +26,17 @@ const GroupPage = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
+  const groupId = useSelector(
+    (state: RootState) => state.groupExpenseSlice.groupCode
+  );
 
+  const handleIncomingRequestsClick = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await dispatch(fetchJoinRequests(groupId));
+    if (response.payload === 200) {
+      setOpenIncomingRequestsModal(true);
+    }
+  };
   return (
     <>
       <Header />
@@ -35,9 +49,9 @@ const GroupPage = () => {
       <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
       <p
         className="hover:underline cursor-pointer text-sky-600 px-5 mt-3"
-        onClick={() => setOpenIncomingRequestsModal(true)}
+        onClick={handleIncomingRequestsClick}
       >
-        Incoming Requests (2)
+        Incoming Requests
       </p>
       <Grid container rowSpacing={2} columnSpacing={2} className="!mt-1 px-5">
         <Grid item xs={12} sm={6} md={4}>
@@ -64,6 +78,7 @@ const GroupPage = () => {
       <IncomingRequestsModal
         open={openIncomingRequestsModal}
         handleClose={() => setOpenIncomingRequestsModal(false)}
+        dispatch={dispatch}
       />
       <IconButton
         className="!absolute bottom-4 right-4"

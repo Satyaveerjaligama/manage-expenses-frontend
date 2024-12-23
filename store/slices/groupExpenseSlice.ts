@@ -12,12 +12,17 @@ interface GroupExpenseSliceProps {
     members: string[];
     requests: string[];
   }[];
+  groupJoiningRequestsList: {
+    userId: string;
+    userName: string;
+  }[];
 }
 
 export const groupExpenseSliceInitialState: GroupExpenseSliceProps = {
   groupName: "",
   groupCode: "",
   groupsList: [],
+  groupJoiningRequestsList: [],
 };
 
 const groupExpenseSlice = createSlice({
