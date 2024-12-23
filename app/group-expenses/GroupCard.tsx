@@ -8,15 +8,22 @@ interface GroupCardProps {
   members: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleOpen: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onLabelClick: any;
 }
 
 const GroupCard = (props: GroupCardProps) => {
-  const { groupLabel, members, handleOpen } = props;
+  const { groupLabel, members, handleOpen, onLabelClick } = props;
   return (
     <Card>
       <CardContent>
         <div className="flex justify-between items-center">
-          <p className="!font-bold !text-lg">{groupLabel}</p>
+          <p
+            className="!font-bold !text-lg hover:underline cursor-pointer"
+            onClick={onLabelClick}
+          >
+            {groupLabel}
+          </p>
           <IconButton onClick={() => handleOpen(GROUP_MODAL_TYPES.edit)}>
             <MoreVertRoundedIcon />
           </IconButton>

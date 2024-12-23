@@ -17,9 +17,12 @@ import {
   groupExpenseSliceInitialState,
   updateGroupExpenseSlice,
 } from "@/store/slices/groupExpenseSlice";
+import { useRouter } from "next/navigation";
+import { routes } from "@/utils/routes";
 
 const GroupExpensesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [modalType, setModalType] = useState(GROUP_MODAL_TYPES.create);
   const userId = useSelector(
@@ -52,6 +55,19 @@ const GroupExpensesPage = () => {
     dispatch(getUserGroups(userId));
   }, []);
 
+  const onLabelClick = (groupId: string) => {
+    if (groupId.startsWith("group_")) {
+      groupId = groupId.replace("group_", "");
+    }
+    dispatch(
+      updateGroupExpenseSlice({
+        key: KEYS_OF_GROUP_EXPENSE_SLICE.groupCode,
+        value: groupId,
+      })
+    );
+    router.push(`/${routes.groupExpenses}/${groupId}`);
+  };
+
   return (
     <>
       <Header />
@@ -73,6 +89,7 @@ const GroupExpensesPage = () => {
           <Grid item xs={12} sm={6} md={4} key={group.groupId}>
             <GroupCard
               groupLabel={group.groupName}
+              onLabelClick={() => onLabelClick(group.groupId)}
               members={group.members.length + 1}
               handleOpen={(modalType: string) => {
                 dispatch(

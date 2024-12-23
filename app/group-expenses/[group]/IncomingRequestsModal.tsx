@@ -6,6 +6,10 @@ import { Divider, IconButton } from "@mui/material";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 import { lexend } from "@/utils/fonts";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import React from "react";
+import processJoinRequests from "@/store/thunks/processJoinRequest";
 
 const style = {
   position: "absolute",
@@ -23,10 +27,22 @@ interface IncomingRequestsModalProps {
   open: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleClose: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dispatch: any;
 }
 
 const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
-  const { open, handleClose } = props;
+  const { open, handleClose, dispatch } = props;
+  const { groupJoiningRequestsList } = useSelector(
+    (state: RootState) => state.groupExpenseSlice
+  );
+
+  const handleActionButton = async (
+    action: "approve" | "delete",
+    userId: string
+  ) => {
+    await dispatch(processJoinRequests({ action, userId }));
+  };
 
   return (
     <div>
@@ -46,30 +62,30 @@ const IncomingRequestsModal = (props: IncomingRequestsModalProps) => {
           >
             Incoming Requests
           </Typography>
-          <Divider className="!mt-3" />
-          <div className="flex justify-between !mt-3">
-            <Typography style={lexend.style}>User one</Typography>
-            <div>
-              <IconButton className="!text-green-500">
-                <DoneRoundedIcon />
-              </IconButton>
-              <IconButton className="!text-rose-600">
-                <CloseRoundedIcon />
-              </IconButton>
-            </div>
-          </div>
-          <Divider className="!mt-3" />
-          <div className="flex justify-between !mt-3">
-            <Typography style={lexend.style}>User two</Typography>
-            <div>
-              <IconButton className="!text-green-500">
-                <DoneRoundedIcon />
-              </IconButton>
-              <IconButton className="!text-rose-600">
-                <CloseRoundedIcon />
-              </IconButton>
-            </div>
-          </div>
+          {groupJoiningRequestsList.map((request) => (
+            <React.Fragment key={request.userId}>
+              <Divider className="!mt-3" />
+              <div className="flex justify-between !mt-3">
+                <Typography style={lexend.style}>{request.userName}</Typography>
+                <div>
+                  <IconButton
+                    className="!text-green-500"
+                    onClick={() =>
+                      handleActionButton("approve", request.userId)
+                    }
+                  >
+                    <DoneRoundedIcon />
+                  </IconButton>
+                  <IconButton
+                    className="!text-rose-600"
+                    onClick={() => handleActionButton("delete", request.userId)}
+                  >
+                    <CloseRoundedIcon />
+                  </IconButton>
+                </div>
+              </div>
+            </React.Fragment>
+          ))}
         </Box>
       </Modal>
     </div>

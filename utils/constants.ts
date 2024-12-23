@@ -117,6 +117,7 @@ export const KEYS_OF_GROUP_EXPENSE_SLICE = {
   groupName: "groupName",
   groupCode: "groupCode",
   groupsList: "groupsList",
+  groupJoiningRequestsList: "groupJoiningRequestsList",
 };
 
 export const KEYS_OF_ERROR_SLICE = {
@@ -150,4 +151,7 @@ export const API_END_POINTS = {
   UPDATE_EXPENSE: "update-expense",
   UPDATE_GROUP: "update-group",
   CREATE_ACCOUNT: "create-group",
+  JOIN_GROUP: "join-group",
+  FETCH_JOIN_REQUESTS: "fetch-join-requests",
+  PROCESS_JOIN_REQUESTS: "process-join-request",
 };
