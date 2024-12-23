@@ -118,6 +118,7 @@ export const KEYS_OF_GROUP_EXPENSE_SLICE = {
   groupCode: "groupCode",
   groupsList: "groupsList",
   groupJoiningRequestsList: "groupJoiningRequestsList",
+  groupExpensesList: "groupExpensesList",
 };
 
 export const KEYS_OF_ERROR_SLICE = {

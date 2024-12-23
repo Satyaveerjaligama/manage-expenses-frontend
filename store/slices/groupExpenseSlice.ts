@@ -16,6 +16,15 @@ interface GroupExpenseSliceProps {
     userId: string;
     userName: string;
   }[];
+  groupExpensesList: {
+    expenseId: string;
+    expenseName: string;
+    amount: number;
+    date: string;
+    paymentMethod: string;
+    paymentType: string;
+    addedBy: string;
+  }[];
 }
 
 export const groupExpenseSliceInitialState: GroupExpenseSliceProps = {
@@ -23,6 +32,7 @@ export const groupExpenseSliceInitialState: GroupExpenseSliceProps = {
   groupCode: "",
   groupsList: [],
   groupJoiningRequestsList: [],
+  groupExpensesList: [],
 };
 
 const groupExpenseSlice = createSlice({

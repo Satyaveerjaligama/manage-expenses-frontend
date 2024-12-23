@@ -2,7 +2,7 @@
 import Header from "@/components/Header";
 import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
 import SummarySection from "@/components/SummarySection";
 import ExpenseModal from "@/components/ExpenseModal";
@@ -13,6 +13,7 @@ import { lexend } from "@/utils/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import fetchJoinRequests from "@/store/thunks/fetchJoinRequests";
+import getUserExpenses from "@/store/thunks/getUserExpenses";
 
 const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,17 +27,22 @@ const GroupPage = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const groupId = useSelector(
-    (state: RootState) => state.groupExpenseSlice.groupCode
+  const { groupCode, groupExpensesList } = useSelector(
+    (state: RootState) => state.groupExpenseSlice
   );
 
   const handleIncomingRequestsClick = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const response: any = await dispatch(fetchJoinRequests(groupId));
+    const response: any = await dispatch(fetchJoinRequests(groupCode));
     if (response.payload === 200) {
       setOpenIncomingRequestsModal(true);
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserExpenses(`group_${groupCode}`));
+  }, []);
+
   return (
     <>
       <Header />
@@ -54,15 +60,17 @@ const GroupPage = () => {
         Incoming Requests
       </p>
       <Grid container rowSpacing={2} columnSpacing={2} className="!mt-1 px-5">
-        <Grid item xs={12} sm={6} md={4}>
-          <ExpenseCard
-            label="Sample"
-            amount={100}
-            date="18-Dec"
-            handleOpen={() => setOpenGroupExpenseModal(true)}
-            paymentMethod="Debit or Credit card"
-          />
-        </Grid>
+        {groupExpensesList.map((expense) => (
+          <Grid item xs={12} sm={6} md={4} key={expense.expenseId}>
+            <ExpenseCard
+              label={expense.expenseName}
+              amount={expense.amount}
+              date={expense.date}
+              handleOpen={() => setOpenGroupExpenseModal(true)}
+              paymentMethod={expense.paymentMethod}
+            />
+          </Grid>
+        ))}
       </Grid>
       <ExpenseModal
         open={open}
