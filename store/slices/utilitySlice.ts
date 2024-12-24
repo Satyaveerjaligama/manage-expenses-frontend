@@ -28,9 +28,13 @@ const utilitySlice = createSlice({
         state[action.payload.key] = action.payload.value;
       }
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clearUtilitySlice: (state: any) => {
+      state.snackBar = utilitySliceInitialState.snackBar;
+    },
   },
 });
 
 export default utilitySlice.reducer;
 
-export const { updateUtilitySlice } = utilitySlice.actions;
+export const { updateUtilitySlice, clearUtilitySlice } = utilitySlice.actions;

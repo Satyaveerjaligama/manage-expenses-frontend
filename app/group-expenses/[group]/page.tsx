@@ -4,7 +4,7 @@ import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import { useEffect, useState } from "react";
 import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
-import SummarySection from "@/components/SummarySection";
+// import SummarySection from "@/components/SummarySection";
 import ExpenseModal from "@/components/ExpenseModal";
 import ExpenseCard from "@/components/ExpenseCard";
 import EditGroupExpenseModal from "./EditGroupExpenseModal";
@@ -27,7 +27,7 @@ const GroupPage = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const { groupCode, groupExpensesList } = useSelector(
+  const { groupCode, groupExpensesList, groupName } = useSelector(
     (state: RootState) => state.groupExpenseSlice
   );
 
@@ -49,9 +49,9 @@ const GroupPage = () => {
       <p
         className={`text-3xl text-center !mb-5 underline text-white ${lexend.className}`}
       >
-        Group name
+        {groupName}
       </p>
-      <SummarySection />
+      {/* <SummarySection /> */}
       <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
       <p
         className="hover:underline cursor-pointer text-sky-600 px-5 mt-3"
@@ -71,6 +71,13 @@ const GroupPage = () => {
             />
           </Grid>
         ))}
+        {groupExpensesList?.length === 0 && (
+          <Grid item xs={12}>
+            <p className="text-center text-amber-400 text-lg">
+              No expenses to show
+            </p>
+          </Grid>
+        )}
       </Grid>
       <ExpenseModal
         open={open}

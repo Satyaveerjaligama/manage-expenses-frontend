@@ -35,9 +35,19 @@ const centralDataSlice = createSlice({
         state[action?.payload?.key] = action.payload.value;
       }
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clearCentralDataSlice: (state: any) => {
+      state.userName = centralDataSliceInitialState.userName;
+      state.emailOrPhoneNumber =
+        centralDataSliceInitialState.emailOrPhoneNumber;
+      state.password = centralDataSliceInitialState.password;
+      state.confirmPassword = centralDataSliceInitialState.confirmPassword;
+      state.userId = centralDataSliceInitialState.userId;
+    },
   },
 });
 
 export default centralDataSlice.reducer;
 
-export const { updateCentralDataSlice } = centralDataSlice.actions;
+export const { updateCentralDataSlice, clearCentralDataSlice } =
+  centralDataSlice.actions;

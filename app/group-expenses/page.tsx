@@ -1,6 +1,6 @@
 "use client";
 import Header from "@/components/Header";
-import { Grid, IconButton } from "@mui/material";
+import { Divider, Grid, IconButton } from "@mui/material";
 import GroupCard from "./GroupCard";
 import { useEffect, useState } from "react";
 import {
@@ -55,7 +55,7 @@ const GroupExpensesPage = () => {
     dispatch(getUserGroups(userId));
   }, []);
 
-  const onLabelClick = (groupId: string) => {
+  const onLabelClick = (groupId: string, groupName: string) => {
     if (groupId.startsWith("group_")) {
       groupId = groupId.replace("group_", "");
     }
@@ -63,6 +63,12 @@ const GroupExpensesPage = () => {
       updateGroupExpenseSlice({
         key: KEYS_OF_GROUP_EXPENSE_SLICE.groupCode,
         value: groupId,
+      })
+    );
+    dispatch(
+      updateGroupExpenseSlice({
+        key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
+        value: groupName,
       })
     );
     router.push(`/${routes.groupExpenses}/${groupId}`);
@@ -76,6 +82,7 @@ const GroupExpensesPage = () => {
       >
         Groups
       </p>
+      <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
       <div className="text-right mt-3 px-5">
         <p
           className="hover:underline cursor-pointer text-sky-600"
@@ -89,7 +96,7 @@ const GroupExpensesPage = () => {
           <Grid item xs={12} sm={6} md={4} key={group.groupId}>
             <GroupCard
               groupLabel={group.groupName}
-              onLabelClick={() => onLabelClick(group.groupId)}
+              onLabelClick={() => onLabelClick(group.groupId, group.groupName)}
               members={group.members.length + 1}
               handleOpen={(modalType: string) => {
                 dispatch(
@@ -109,11 +116,26 @@ const GroupExpensesPage = () => {
             />
           </Grid>
         ))}
+        {groupsList?.length === 0 && (
+          <Grid item xs={12}>
+            <p className="text-center text-amber-400 text-lg">
+              No groups to show
+            </p>
+          </Grid>
+        )}
       </Grid>
       <GroupModal handleClose={handleClose} open={open} modalType={modalType} />
       <IconButton
         className="!absolute bottom-4 right-4"
-        onClick={() => handleOpen(GROUP_MODAL_TYPES.create)}
+        onClick={() => {
+          dispatch(
+            updateGroupExpenseSlice({
+              key: KEYS_OF_GROUP_EXPENSE_SLICE.groupName,
+              value: groupExpenseSliceInitialState.groupName,
+            })
+          );
+          handleOpen(GROUP_MODAL_TYPES.create);
+        }}
       >
         <AddCircleRoundedIcon className="!text-6xl text-white" />
       </IconButton>

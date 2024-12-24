@@ -52,6 +52,11 @@ const expenseSlice = createSlice({
     clearExpenseDetails: (state: any) => {
       state.expenseDetails = expenseSliceInitialState.expenseDetails;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clearExpenseSlice: (state: any) => {
+      state.expenseDetails = expenseSliceInitialState.expenseDetails;
+      state.expensesList = expenseSliceInitialState.expensesList;
+    },
   },
 });
 

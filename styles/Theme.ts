@@ -17,6 +17,9 @@ const Theme = createTheme({
           borderRadius: "50px",
           textTransform: "none",
         },
+        contained: {
+          backgroundColor: "#412b31",
+        },
       },
     },
     MuiOutlinedInput: {
