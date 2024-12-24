@@ -72,9 +72,18 @@ const errorSlice = createSlice({
         state[action?.payload?.key] = action.payload.value;
       }
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clearErrorSlice: (state: any) => {
+      state.loginErrors = errorSliceInitialState.loginErrors;
+      state.signupErrors = errorSliceInitialState.signupErrors;
+      state.expenseErrors = errorSliceInitialState.expenseErrors;
+      state.createGroupErrors = errorSliceInitialState.createGroupErrors;
+      state.joinGroupErrors = errorSliceInitialState.joinGroupErrors;
+      state.addAmountErrors = errorSliceInitialState.addAmountErrors;
+    },
   },
 });
 
 export default errorSlice.reducer;
 
-export const { updateErrorSlice } = errorSlice.actions;
+export const { updateErrorSlice, clearErrorSlice } = errorSlice.actions;

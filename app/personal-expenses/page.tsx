@@ -1,6 +1,6 @@
 "use client";
 import Header from "@/components/Header";
-import SummarySection from "../../components/SummarySection";
+// import SummarySection from "../../components/SummarySection";
 import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import ExpenseModal from "../../components/ExpenseModal";
@@ -61,7 +61,7 @@ const PersonalExpensesPage = () => {
       >
         Personal Expenses
       </p>
-      <SummarySection />
+      {/* <SummarySection /> */}
       <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
       <Grid
         container
@@ -73,7 +73,7 @@ const PersonalExpensesPage = () => {
           <Grid item xs={12} sm={6} md={4} key={expense.expenseId}>
             <ExpenseCard
               label={expense.expenseName}
-              amount={expense.amount}
+              amount={expense.amount.toLocaleString("en-in")}
               date={expense.date}
               handleOpen={(modalType: string) => {
                 dispatch(
@@ -96,6 +96,13 @@ const PersonalExpensesPage = () => {
             />
           </Grid>
         ))}
+        {expensesList?.length === 0 && (
+          <Grid item xs={12}>
+            <p className="text-center text-amber-400 text-lg">
+              No expenses to show
+            </p>
+          </Grid>
+        )}
       </Grid>
       <ExpenseModal
         open={open}

@@ -2,9 +2,9 @@
 import Header from "@/components/Header";
 import { Divider, Grid, IconButton } from "@mui/material";
 import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EXPENSE_MODAL_TYPES } from "@/utils/constants";
-import SummarySection from "@/components/SummarySection";
+// import SummarySection from "@/components/SummarySection";
 import ExpenseModal from "@/components/ExpenseModal";
 import ExpenseCard from "@/components/ExpenseCard";
 import EditGroupExpenseModal from "./EditGroupExpenseModal";
@@ -13,6 +13,7 @@ import { lexend } from "@/utils/fonts";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import fetchJoinRequests from "@/store/thunks/fetchJoinRequests";
+import getUserExpenses from "@/store/thunks/getUserExpenses";
 
 const GroupPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -26,26 +27,31 @@ const GroupPage = () => {
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
-  const groupId = useSelector(
-    (state: RootState) => state.groupExpenseSlice.groupCode
+  const { groupCode, groupExpensesList, groupName } = useSelector(
+    (state: RootState) => state.groupExpenseSlice
   );
 
   const handleIncomingRequestsClick = async () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const response: any = await dispatch(fetchJoinRequests(groupId));
+    const response: any = await dispatch(fetchJoinRequests(groupCode));
     if (response.payload === 200) {
       setOpenIncomingRequestsModal(true);
     }
   };
+
+  useEffect(() => {
+    dispatch(getUserExpenses(`group_${groupCode}`));
+  }, []);
+
   return (
     <>
       <Header />
       <p
         className={`text-3xl text-center !mb-5 underline text-white ${lexend.className}`}
       >
-        Group name
+        {groupName}
       </p>
-      <SummarySection />
+      {/* <SummarySection /> */}
       <Divider className="!mt-3 !border-white justify-self-center w-11/12" />
       <p
         className="hover:underline cursor-pointer text-sky-600 px-5 mt-3"
@@ -54,15 +60,24 @@ const GroupPage = () => {
         Incoming Requests
       </p>
       <Grid container rowSpacing={2} columnSpacing={2} className="!mt-1 px-5">
-        <Grid item xs={12} sm={6} md={4}>
-          <ExpenseCard
-            label="Sample"
-            amount={100}
-            date="18-Dec"
-            handleOpen={() => setOpenGroupExpenseModal(true)}
-            paymentMethod="Debit or Credit card"
-          />
-        </Grid>
+        {groupExpensesList.map((expense) => (
+          <Grid item xs={12} sm={6} md={4} key={expense.expenseId}>
+            <ExpenseCard
+              label={expense.expenseName}
+              amount={expense.amount}
+              date={expense.date}
+              handleOpen={() => setOpenGroupExpenseModal(true)}
+              paymentMethod={expense.paymentMethod}
+            />
+          </Grid>
+        ))}
+        {groupExpensesList?.length === 0 && (
+          <Grid item xs={12}>
+            <p className="text-center text-amber-400 text-lg">
+              No expenses to show
+            </p>
+          </Grid>
+        )}
       </Grid>
       <ExpenseModal
         open={open}

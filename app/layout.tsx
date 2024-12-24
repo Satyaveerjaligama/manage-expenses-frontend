@@ -4,8 +4,9 @@ import "./globals.css";
 import { ThemeProvider } from "@mui/material";
 import Theme from "@/styles/Theme";
 import { Provider } from "react-redux";
-import store from "@/store/store";
+import store, { persistor } from "@/store/store";
 import Snackbar from "@/components/SnackBar";
+import { PersistGate } from "redux-persist/integration/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +29,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          <ThemeProvider theme={Theme}>
-            <Snackbar />
-            {children}
-          </ThemeProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <ThemeProvider theme={Theme}>
+              <Snackbar />
+              {children}
+            </ThemeProvider>
+          </PersistGate>
         </Provider>
       </body>
     </html>

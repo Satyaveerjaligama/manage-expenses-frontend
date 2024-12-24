@@ -257,6 +257,7 @@ const GroupModal = (props: GroupModalProps) => {
                 fullWidth
                 style={lexend.style}
                 className="!text-base"
+                color="error"
                 onClick={() => onButtonClick(BUTTON_TYPES.delete)}
               >
                 Delete

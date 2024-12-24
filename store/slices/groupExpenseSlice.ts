@@ -16,6 +16,15 @@ interface GroupExpenseSliceProps {
     userId: string;
     userName: string;
   }[];
+  groupExpensesList: {
+    expenseId: string;
+    expenseName: string;
+    amount: number;
+    date: string;
+    paymentMethod: string;
+    paymentType: string;
+    addedBy: string;
+  }[];
 }
 
 export const groupExpenseSliceInitialState: GroupExpenseSliceProps = {
@@ -23,6 +32,7 @@ export const groupExpenseSliceInitialState: GroupExpenseSliceProps = {
   groupCode: "",
   groupsList: [],
   groupJoiningRequestsList: [],
+  groupExpensesList: [],
 };
 
 const groupExpenseSlice = createSlice({
@@ -37,9 +47,19 @@ const groupExpenseSlice = createSlice({
         state[action?.payload?.key] = action.payload.value;
       }
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    clearGroupExpenseSlice: (state: any) => {
+      state.groupName = groupExpenseSliceInitialState.groupName;
+      state.groupCode = groupExpenseSliceInitialState.groupCode;
+      state.groupsList = groupExpenseSliceInitialState.groupsList;
+      state.groupJoiningRequestsList =
+        groupExpenseSliceInitialState.groupJoiningRequestsList;
+      state.groupExpensesList = groupExpenseSliceInitialState.groupExpensesList;
+    },
   },
 });
 
 export default groupExpenseSlice.reducer;
 
-export const { updateGroupExpenseSlice } = groupExpenseSlice.actions;
+export const { updateGroupExpenseSlice, clearGroupExpenseSlice } =
+  groupExpenseSlice.actions;
