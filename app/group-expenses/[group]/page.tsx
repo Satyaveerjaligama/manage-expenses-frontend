@@ -64,7 +64,7 @@ const GroupPage = () => {
           <Grid item xs={12} sm={6} md={4} key={expense.expenseId}>
             <ExpenseCard
               label={expense.expenseName}
-              amount={expense.amount}
+              amount={expense.amount.toLocaleString("en-in")}
               date={expense.date}
               handleOpen={() => setOpenGroupExpenseModal(true)}
               paymentMethod={expense.paymentMethod}

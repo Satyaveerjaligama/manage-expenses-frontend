@@ -274,6 +274,7 @@ const ExpenseModal = (props: ExpenseModalProps) => {
                 endIcon={<DeleteRoundedIcon />}
                 style={lexend.style}
                 className="!text-base"
+                color="error"
                 onClick={() => onButtonClick("delete")}
               >
                 Delete
