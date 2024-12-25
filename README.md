@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Manage Expenses - Frontend
 
-## Getting Started
+This is the Frontend service of Manage Expenses app. This repository have the code related to User interface, API integrations, etc
 
-First, run the development server:
+## This application is developed using
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next JS
+- TypeScript
+- Redux Toolkit
+- Tailwind CSS
+- Material UI
+- Yup validations
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Application UI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Landing Page
+   ![Landing Page](assets/images/readme-file-images/landingPage.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Login Page
+   ![Login Page](assets/images/readme-file-images/loginPage.png)
 
-## Learn More
+3. Signup Page
+   ![Signup Page](assets/images/readme-file-images/signupPage.png)
 
-To learn more about Next.js, take a look at the following resources:
+4. Home Page
+   ![Signup Page](assets/images/readme-file-images/homePage.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Personal Expenses Page
+   ![Personal Expenses Page](assets/images/readme-file-images/personalExpensesPage.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. Add Personal Expense
+   ![Add Personal Expense](assets/images/readme-file-images/addExpense.png)
 
-## Deploy on Vercel
+7. Edit Personal Expense
+   ![Edit Personal Expense](assets/images/readme-file-images/editExpense.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+8. Groups Page
+   ![Groups Page](assets/images/readme-file-images/groups.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+9. Create Group
+   ![Create Group](assets/images/readme-file-images/createGroup.png)
+
+10. Edit Group
+    ![Edit Group](assets/images/readme-file-images/editGroup.png)
+
+11. Join Group
+    ![Join Group](assets/images/readme-file-images/joinGroup.png)
+
+12. Group Expenses
+    ![Group Expenses](assets/images/readme-file-images/groupExpenses.png)
+
+13. Join Requests
+    ![Group Join Requests](assets/images/readme-file-images/incomingRequests.png)
+
+14. Add Group Expense
+    ![Add Group Expense](assets/images/readme-file-images/addGroupExpense.png)
