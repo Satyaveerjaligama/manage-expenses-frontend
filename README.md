@@ -1,6 +1,7 @@
 # Manage Expenses - Frontend
 
-This is the Frontend service of Manage Expenses app. This repository have the code related to User interface, API integrations, etc
+This is the Frontend service of Manage Expenses app. This repository have the code related to User interface, API integrations, etc  
+[Click here to check Backend repo](https://github.com/Satyaveerjaligama/manage-expenses-backend)
 
 ## This application is developed using
 
